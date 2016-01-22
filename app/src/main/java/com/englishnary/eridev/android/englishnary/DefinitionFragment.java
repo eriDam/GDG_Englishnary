@@ -65,24 +65,11 @@ public class DefinitionFragment extends Fragment {
          }
 
         /*Step 2:
-
-        {"definitions":[{"text":"The use of words to express something different from and often opposite to
-        their literal meaning.","attribution":"from The American Heritage® Dictionary of the English Language,
-        4th Edition"},{"text":"An expression or utterance marked by a deliberate contrast between apparent and
-         intended meaning.","attribution":"from The American Heritage® Dictionary of the English Language,
-         4th Edition"},{"text":"A literary style employing such contrasts for humorous or rhetorical effect.
-        See Synonyms at wit1.","attribution":"from The American Heritage® Dictionary of the English Language,
-        4th Edition"},{"text":"Incongruity between what might be expected and what
-         actually occurs: \"Hyde noted the irony of Ireland's copying the nation she most hated”
-        ( Richard Kain). ","attribution":"from The American Heritage® Dictionary of the English Language,
-        4th Edition"},{"text":"An occurrence, result, or circumstance notable for such incongruity.
-         See Usage Note at ironic.","attribution":"from The American Heritage® Dictionary of the English Language,
-         4th Edition"},{"text":"Dramatic irony.","attribution":"from The American Heritage® Dictionary of the English Language, 4th Edition"},{"text":"Socratic irony.",
-        "attribution":"from The American Heritage® Dictionary of the English Language, 4th Edition"}]}
+        Add APPIKEY in gradle.properties and
+        These code snippets use an open-source library. http://unirest.io/java
         */
 
-        // Add APPIKEY in gradle.properties and
-        // These code snippets use an open-source library. http://unirest.io/java
+
         public class FetchDefinitionTask extends AsyncTask<Void, Void, Void> {
 
             private final String LOG_TAG = FetchDefinitionTask.class.getSimpleName();
