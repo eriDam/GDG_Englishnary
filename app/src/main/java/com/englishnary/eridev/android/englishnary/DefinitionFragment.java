@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -64,6 +66,13 @@ public class DefinitionFragment extends Fragment {
         return rootView;
          }
 
+        // Inflate the menu; this adds items to the action bar if it is present.
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.menu_definition_fragment, menu);
+
+
+    }
         /*Step 2:
         Add APPIKEY in gradle.properties and
         These code snippets use an open-source library. http://unirest.io/java
