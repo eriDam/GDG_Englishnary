@@ -1,5 +1,6 @@
 package com.englishnary.eridev.android.englishnary;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -55,6 +56,7 @@ public class DefinitionFragment extends Fragment {
             if (id == R.id.action_refresh) {
                 FetchDefinitionTask definitionTask = new FetchDefinitionTask();
                 definitionTask.execute();
+                definitionTask.execute("irony");
                 return true;
         }
         Log.v(LOG_TAG, "Action refresh is selected"+ id);
@@ -102,12 +104,12 @@ public class DefinitionFragment extends Fragment {
         */
 
 
-         class FetchDefinitionTask extends AsyncTask<Void, Void, Void> {
+         class FetchDefinitionTask extends AsyncTask<String, Void, Void> {
 
             private final String LOG_TAG = FetchDefinitionTask.class.getSimpleName();
 
             @Override
-            protected Void doInBackground(Void... params) {
+            protected Void doInBackground(String... params) {
 
                 // These two need to be declared outside the try/catch
                 // so that they can be closed in the finally block.
@@ -117,24 +119,48 @@ public class DefinitionFragment extends Fragment {
                 // Will contain the raw JSON response as a string.
                 String definitionsJsonStr = null;
                 Log.i(LOG_TAG, "Try is below");
+
+                String word = "word";
+                String accept= "application/json";
+
+
+
+//                // These code snippets use an open-source library. http://unirest.io/java
+//                HttpResponse<JsonNode> response = Unirest.get("https://montanaflynn-dictionary.p.mashape.com/define?word=irony")
+//                        .header("X-Mashape-Key", "j3xDUUtlPBmsh2jTpSk26R6i75F7p1c4r9EjsnqnEs6GGPyV7t")
+//                        .header("Accept", "application/json")
+//                        .asJson();
+//
+
                 try {
                     // Construct the URL for the Dictionary query
                     // Possible parameters are avaiable at OWM's dictionary API page,
                     // at https://market.mashape.com/montanaflynn/dictionary
 
-                    //I don't use header, here is the mistake
+
                    // URL url = new URL("https://montanaflynn-dictionary.p.mashape.com/define?word=irony"
-//                    String baseUrl ="https://montanaflynn-dictionary.p.mashape.com/define?word=legal/";
+//                    String baseUrl ="https://montanaflynn-dictionary.p.mashape.com/define?word=legal";
 //                    String apiKey =  "X-Mashape-Key: j3xDUUtlPBmsh2jTpSk26R6i75F7p1c4r9EjsnqnEs6GGPyV7t/"
 //                    + "Accept: application/json";
 //                    URL url = new URL(baseUrl.concat(apiKey));
+                    final String DEFINITION_BASE_URL =
+                            "https://montanaflynn-dictionary.p.mashape.com/define?";
+                    final String QUERY_PARAM = "word";
+                    final String APPID_PARAM = "APPID";
 
-                            String baseUrl = "https://montanaflynn-dictionary.p.mashape.com/define?word=irony";
-                            String apiKey = "&APPID=" + BuildConfig.X_MASHAPE_KEY;
-                            URL url = new URL(baseUrl.concat(apiKey));
-                      
+//                            String baseUrl = "https://montanaflynn-dictionary.p.mashape.com/define?";
+//                            String apiKey = "&APPID=" + BuildConfig.X_MASHAPE_KEY;
+//                            URL url = new URL(baseUrl.concat(apiKey));
+//
+                    Uri builtUri = Uri.parse(DEFINITION_BASE_URL).buildUpon()
+                            .appendQueryParameter(QUERY_PARAM, params[0])
+                     .appendQueryParameter(APPID_PARAM, BuildConfig.X_MASHAPE_KEY)
+                     .build();
 
-                    // Create the request to Api and open the connection
+                      URL url = new URL(builtUri.toString());
+                      Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+
+// Create the request to Api and open the connection
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.connect();
