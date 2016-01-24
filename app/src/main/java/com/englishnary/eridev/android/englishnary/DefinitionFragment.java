@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -33,6 +34,33 @@ public class DefinitionFragment extends Fragment {
     public DefinitionFragment() {
     }
 
+        public void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                // Add this line in order for this fragment to handle menu events.
+                        setHasOptionsMenu(true);
+        }
+
+    // Inflate the menu; this adds items to the action bar if it is present.
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_definition_fragment, menu);
+
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //If item action_refresh clik call FetchDefinitionTask to execute
+        int id = item.getItemId();
+            //Toast.makeText(DefinitionFragment.this, "Awesome you are pushed button ok", Toast.LENGTH_SHORT).show();
+            if (id == R.id.action_refresh) {
+                FetchDefinitionTask definitionTask = new FetchDefinitionTask();
+                definitionTask.execute();
+                return true;
+        }
+        Log.v(LOG_TAG, "Action refresh is selected"+ id);
+            return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +77,7 @@ public class DefinitionFragment extends Fragment {
                 "Back up", "Bandwidth", "Banner", "Basics", "Benefit", "Blog", "Blue tooth",
                 "Bookmarks", "Boot up", "Broadband", "Browser", "Bugs", "Bytes"
         };
+
         List<String> categoryDefinitions = new ArrayList<String>(Arrays.asList(wordsArray));
 
         // use it to fill the ListView it's attached to.
@@ -66,20 +95,14 @@ public class DefinitionFragment extends Fragment {
         return rootView;
          }
 
-        // Inflate the menu; this adds items to the action bar if it is present.
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            inflater.inflate(R.menu.menu_definition_fragment, menu);
 
-
-    }
         /*Step 2:
         Add APPIKEY in gradle.properties and
         These code snippets use an open-source library. http://unirest.io/java
         */
 
 
-        public class FetchDefinitionTask extends AsyncTask<Void, Void, Void> {
+         class FetchDefinitionTask extends AsyncTask<Void, Void, Void> {
 
             private final String LOG_TAG = FetchDefinitionTask.class.getSimpleName();
 
@@ -100,8 +123,16 @@ public class DefinitionFragment extends Fragment {
                     // at https://market.mashape.com/montanaflynn/dictionary
 
                     //I don't use header, here is the mistake
-                    URL url = new URL("https://montanaflynn-dictionary.p.mashape.com/define?word=irony"
-                            + BuildConfig.X_MASHAPE_KEY);
+                   // URL url = new URL("https://montanaflynn-dictionary.p.mashape.com/define?word=irony"
+//                    String baseUrl ="https://montanaflynn-dictionary.p.mashape.com/define?word=legal/";
+//                    String apiKey =  "X-Mashape-Key: j3xDUUtlPBmsh2jTpSk26R6i75F7p1c4r9EjsnqnEs6GGPyV7t/"
+//                    + "Accept: application/json";
+//                    URL url = new URL(baseUrl.concat(apiKey));
+
+                            String baseUrl = "https://montanaflynn-dictionary.p.mashape.com/define?word=irony";
+                            String apiKey = "&APPID=" + BuildConfig.X_MASHAPE_KEY;
+                            URL url = new URL(baseUrl.concat(apiKey));
+                      
 
                     // Create the request to Api and open the connection
                     urlConnection = (HttpURLConnection) url.openConnection();

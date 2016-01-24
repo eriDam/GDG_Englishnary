@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            DefinitionFragment.FetchDefinitionTask defTask = new DefinitionFragment.FetchDefinitionTask();
-            defTask.execute();
+//            DefinitionFragment.FetchDefinitionTask defTask = new DefinitionFragment.FetchDefinitionTask();
+//            defTask.execute();
+            Toast.makeText(MainActivity.this, "Awesome you are pushed button"+id+" ok", Toast.LENGTH_SHORT).show();
             return true;
         }
 
