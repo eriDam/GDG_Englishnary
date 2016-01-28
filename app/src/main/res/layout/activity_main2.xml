@@ -1,0 +1,120 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="0dp"
+    android:layout_marginTop="1dp"
+    android:fillViewport="true"
+    android:isScrollContainer="true"
+    android:orientation="vertical"
+    android:padding="0dp"
+    android:scrollbars="horizontal|vertical">
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="0,1">
+        <!--TableLayout distribuye los elementos de forma tabular. Se utiliza la etiqueta
+        <TableRow> cada vez que queremos insertar una nueva línea .-->
+        <TableRow android:layout_weight="1"
+            android:background="#ff050001">
+            <ImageButton
+                android:id="@+id/imgButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Me gusta"
+                android:scaleType="centerInside"
+                android:background="#cd132a"
+                android:src="@drawable/ic_action_user" />
+            <ImageButton
+                android:id="@+id/imgButton2"
+                android:src="@android:drawable/ic_menu_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="No me gusta"
+                android:scaleType="centerInside"
+                android:background="#f8f1f2" />
+        </TableRow>
+        <TableRow android:layout_weight="1"
+            android:background="#ff050001">
+            <ImageButton
+                android:id="@+id/imgButton3"
+                android:src="@drawable/ic_action_star"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Opciones"
+                android:scaleType="centerInside"
+                android:background="#0101fd" />
+            <ImageButton
+                android:id="@+id/imgButton4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Salir"
+                android:scaleType="centerInside"
+                android:background="#fcdcca04"
+                android:src="@android:drawable/ic_menu_view" />
+        </TableRow>
+        <TableRow android:layout_weight="1"
+            android:background="#ff050001">
+            <ImageButton
+                android:id="@+id/imgButton5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Opciones"
+                android:scaleType="centerInside"
+                android:background="#b3123a"
+                android:src="@android:drawable/ic_menu_edit" />
+            <ImageButton
+                android:id="@+id/imageButtonExit"
+                android:src="@android:drawable/ic_menu_recent_history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Salir"
+                android:scaleType="centerInside"
+                android:background="#0c3cdb" />
+        </TableRow>
+        <TableRow android:layout_weight="1"
+            android:background="#ff050001">
+            <ImageButton
+                android:id="@+id/imgButton6"
+                android:src="@android:drawable/ic_menu_share"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Opciones"
+                android:scaleType="centerInside"
+                android:background="#c85a05" />
+            <ImageButton
+                android:id="@+id/imgButton7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Salir"
+                android:scaleType="centerInside"
+                android:background="#4f0fa9"
+                android:src="@android:drawable/ic_menu_agenda" />
+
+        </TableRow>
+        <TableRow android:layout_weight="1"
+            android:background="#ff050001">
+            <ImageButton
+                android:id="@+id/imgButton8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Opciones"
+                android:scaleType="centerInside"
+                android:background="#35a14f"
+                android:src="@android:drawable/ic_menu_manage" />
+            <ImageButton
+                android:id="@+id/imgButton9"
+                android:src="@android:drawable/ic_menu_help"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Salir"
+                android:scaleType="centerInside"
+                android:background="#9f2745" />
+        </TableRow>
+    </TableLayout>
+
+</ScrollView>

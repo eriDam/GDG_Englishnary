@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
 
                 //arrancar la siguiente activity
                 Intent mainIntent = new Intent().setClass(
-                        SplashActivity.this,MainActivity.class);
+                        SplashActivity.this,MenuMain.class);
                 startActivity(mainIntent);
 
                 //Cerrar la actividad para que el usuario no pueda volver atrás presionando el btn back
