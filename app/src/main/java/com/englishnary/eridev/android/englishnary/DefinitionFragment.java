@@ -92,6 +92,7 @@ public class DefinitionFragment extends Fragment {
         ListView listViewDef = (ListView) rootView.findViewById(
                 +R.id.listview_definitions);
         listViewDef.setAdapter(mDefinitionsAdapter);
+        Log.v(LOG_TAG, "listViewDef is inflate" + listViewDef.toString());
         return rootView;
          }
 
@@ -116,27 +117,23 @@ public class DefinitionFragment extends Fragment {
 
                 // Will contain the raw JSON response as a string.
                 String definitionsJsonStr = null;
-                Log.i(LOG_TAG, "Try is below");
+                Log.v(LOG_TAG, "Try is below");
                 try {
                     // Construct the URL for the Dictionary query
                     // Possible parameters are avaiable at OWM's dictionary API page,
                     // at https://market.mashape.com/montanaflynn/dictionary
 
-                    //I don't use header, here is the mistake
-                   // URL url = new URL("https://montanaflynn-dictionary.p.mashape.com/define?word=irony"
-//                    String baseUrl ="https://montanaflynn-dictionary.p.mashape.com/define?word=legal/";
-//                    String apiKey =  "X-Mashape-Key: j3xDUUtlPBmsh2jTpSk26R6i75F7p1c4r9EjsnqnEs6GGPyV7t/"
-//                    + "Accept: application/json";
-//                    URL url = new URL(baseUrl.concat(apiKey));
 
-                            String baseUrl = "https://montanaflynn-dictionary.p.mashape.com/define?word=irony";
-                            String apiKey = "&APPID=" + BuildConfig.X_MASHAPE_KEY;
-                            URL url = new URL(baseUrl.concat(apiKey));
+                   String baseUrl = "https://montanaflynn-dictionary.p.mashape.com/define?word=irony";
+                   String apiKey = "&APPID=" + BuildConfig.X_MASHAPE_KEY;
+                   URL url = new URL(baseUrl.concat(apiKey));
                       
 
                     // Create the request to Api and open the connection
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
+                    //Antes de hacer el conect hay que usar el setRequestProperty para el header
+                    urlConnection.setRequestProperty("X-Mashape-Key", "5WNRUjRRXgmshGBMXphs9Jjn9RK0p1hBRh0jsnoyP9sv5cJl4H");
                     urlConnection.connect();
 
                     // Read the input stream into a String
@@ -161,7 +158,7 @@ public class DefinitionFragment extends Fragment {
                         return null;
                     }
                     definitionsJsonStr = buffer.toString();
-                    Log.v(LOG_TAG, "Forecast Json Str" + definitionsJsonStr);
+                    Log.v(LOG_TAG, "definitions Json Str" + definitionsJsonStr);
                     Log.i(LOG_TAG, definitionsJsonStr);
                 } catch (IOException e) {
                     Log.e("PlaceholderFragment", "Error ", e);

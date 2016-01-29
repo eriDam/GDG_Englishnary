@@ -21,13 +21,14 @@
         <TableRow> cada vez que queremos insertar una nueva línea .-->
         <TableRow android:layout_weight="1"
             android:background="#ff050001">
+
             <ImageButton
                 android:id="@+id/imgButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:contentDescription="Me gusta"
-                android:scaleType="centerInside"
-                android:background="#cd132a"
+                android:scaleType="center"
+                android:background="#e77822"
                 android:src="@drawable/ic_action_user" />
             <ImageButton
                 android:id="@+id/imgButton2"
@@ -36,7 +37,8 @@
                 android:layout_height="match_parent"
                 android:contentDescription="No me gusta"
                 android:scaleType="centerInside"
-                android:background="#f8f1f2" />
+                android:background="#f0c907" />
+
         </TableRow>
         <TableRow android:layout_weight="1"
             android:background="#ff050001">
@@ -47,14 +49,14 @@
                 android:layout_height="match_parent"
                 android:contentDescription="Opciones"
                 android:scaleType="centerInside"
-                android:background="#0101fd" />
+                android:background="#1599e1" />
             <ImageButton
                 android:id="@+id/imgButton4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="Salir"
                 android:scaleType="centerInside"
-                android:background="#fcdcca04"
+                android:background="#fc0ad08e"
                 android:src="@android:drawable/ic_menu_view" />
         </TableRow>
         <TableRow android:layout_weight="1"
