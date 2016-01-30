@@ -43,11 +43,11 @@ public class NotesFecha extends ActionBarActivity {
     fecha ingresada en el primer EditText y remplazar las barras de la fecha por guiones ya que no se
     puede utilizar este caracter dentro de un nombre de archivo en Android:*/
     public void grabar(View v) {
-        String nomarchivo=et_fecha.getText().toString();
-        nomarchivo=nomarchivo.replace('/','-');
+        String nomArchivo=et_fecha.getText().toString();
+        nomArchivo = nomArchivo.replace('/','-');
         try {
             OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput(
-                    nomarchivo, Activity.MODE_PRIVATE));
+                    nomArchivo, Activity.MODE_PRIVATE));
             archivo.write(et_nota.getText().toString());
             archivo.flush();
             archivo.close();

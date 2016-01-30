@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 public class MenuMain extends AppCompatActivity {
-    private ImageButton imgButton2;
+    private ImageButton imgButtonBuscar, imgButtonNotas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,16 +19,22 @@ public class MenuMain extends AppCompatActivity {
     //Metodo para recuperar los controles mediante su id, para descargar el onCreate
     private void iniciarControles() {
         //Obtengo los controles mediante su id
-        imgButton2 = (ImageButton) findViewById(R.id.imgButton2);
+        imgButtonBuscar = (ImageButton) findViewById(R.id.imgButtonBuscar);
+        imgButtonNotas  = (ImageButton) findViewById(R.id.imgButtonNotas);
 
-
-  /*Card Lessons         card_maps.setOnClickListener(new CardView.OnClickListener() {
-*/
-        imgButton2.setOnClickListener(new ImageButton.OnClickListener() {
+        imgButtonBuscar.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent abreLessons = new Intent(MenuMain.this, MainActivity.class);
-                startActivity(abreLessons);
+                Intent abreUserCaption = new Intent(MenuMain.this, UserCaptionActivity.class);
+                startActivity(abreUserCaption );
+
+            }
+        });
+        imgButtonNotas.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent abreNotas = new Intent(MenuMain.this, NotesFecha.class);
+                startActivity(abreNotas );
 
             }
         });
