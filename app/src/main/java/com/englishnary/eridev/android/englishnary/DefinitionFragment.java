@@ -1,6 +1,6 @@
 package com.englishnary.eridev.android.englishnary;
 
-import android.os.AsyncTask;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,12 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +23,7 @@ import java.util.List;
 public class DefinitionFragment extends Fragment {
     private static final String LOG_TAG = DefinitionFragment.class.getSimpleName();
     private static final int DEFINITIONS_LOADER = 0;
-    ArrayAdapter<String> mDefinitionsAdapter;
+    private ArrayAdapter<String> mDefinitionsAdapter;
 
     public DefinitionFragment() {
     }
@@ -49,15 +43,15 @@ public class DefinitionFragment extends Fragment {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        //If item action_refresh clik call FetchDefinitionTask to execute
-//        int id = item.getItemId();
-//            //Toast.makeText(DefinitionFragment.this, "Awesome you are pushed button ok", Toast.LENGTH_SHORT).show();
-//            if (id == R.id.action_refresh) {
-//                FetchDefinitionTask definitionTask = new FetchDefinitionTask();
-//                definitionTask.execute();
-//                return true;
-//        }
-//        Log.v(LOG_TAG, "Action refresh is selected"+ id);
+        //If item action_refresh clik call FetchDefinitionTask to execute
+        int id = item.getItemId();
+            //Toast.makeText(DefinitionFragment.this, "Awesome you are pushed button ok", Toast.LENGTH_SHORT).show();
+            if (id == R.id.action_refresh) {
+                FetchDefinitionTask definitionTask = new FetchDefinitionTask();
+                definitionTask.execute("book");
+                return true;
+        }
+        Log.v(LOG_TAG, "Action refresh is selected"+ id);
 return super.onOptionsItemSelected(item);
     }
         @Override
@@ -65,22 +59,17 @@ return super.onOptionsItemSelected(item);
                              Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.fragment_main, container, false);
 
-        //Inflate root fragment
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+       //Create an ArrayList
+                    Resources res = getResources();
+                    String[] definitionsArray = res.getStringArray(R.array.items);
 
-        // Create data for the ListView.
-        String[] wordsArray = {
-                "Access", "Account", "Activity", "Administrative", "Advantage",
-                "Advertisements", "Animate", "Applications", "Art", "Attachment",
-                "Audience", "Admin",
-                "Back up", "Bandwidth", "Banner", "Basics", "Benefit", "Blog", "Blue tooth",
-                "Bookmarks", "Boot up", "Broadband", "Browser", "Bugs", "Bytes"
-        };
+        List<String> categoryDefinitions = new ArrayList<String>(Arrays.asList(definitionsArray));
+            for (int i = 0; i <= definitionsArray.length; i++) {
 
-        List<String> categoryDefinitions = new ArrayList<String>(Arrays.asList(wordsArray));
-
+                Log.i("Item ", String.valueOf(i));
+            }
         // use it to fill the ListView it's attached to.
-        ArrayAdapter mDefinitionsAdapter = new ArrayAdapter<String>(
+         mDefinitionsAdapter = new ArrayAdapter<String>(
                 //The actual context "this"
                 getActivity(),
                 R.layout.list_item_definitions, // The name of the layout ID.
@@ -88,20 +77,16 @@ return super.onOptionsItemSelected(item);
                 categoryDefinitions);
 
         //Get references to the list view and connect adapter
-        ListView listViewDef = (ListView) rootView.findViewById(
-                +R.id.listview_definitions);
-        listViewDef.setAdapter(mDefinitionsAdapter);
+//        ListView listViewDef = (ListView) rootView.findViewById(
+//                +R.id.listview_definitions);
+//        listViewDef.setAdapter(mDefinitionsAdapter);
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            //setup Views
+            ListView listViewDef = (ListView) rootView.findViewById(R.id.listview_definitions);
+            listViewDef.setAdapter(mDefinitionsAdapter);
+            // return inflater.inflate(R.layout.fragment_main, container, false);
         Log.v(LOG_TAG, "listViewDef is inflate" + listViewDef.toString());
        return rootView;
          }
-
-
-        /*Step 2:
-        Add APPIKEY in gradle.properties and
-        These code snippets use an open-source library. http://unirest.io/java
-        */
-
-
-
 }
 
