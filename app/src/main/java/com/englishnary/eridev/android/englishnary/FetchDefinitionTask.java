@@ -1,7 +1,9 @@
 package com.englishnary.eridev.android.englishnary;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import org.json.JSONArray;
@@ -14,15 +16,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by eridev on 30/01/16.
  */
 
-class FetchDefinitionTask extends AsyncTask<String, Void, String[]> {
+class FetchDefinitionTask extends AsyncTask<String, Void, List<String>> {
 
     private final String LOG_TAG = FetchDefinitionTask.class.getSimpleName();
     private EditText etxtPalabra;
+    private ArrayAdapter<String> definitionsAdapter;
+    private final Context mContext;
 /**
  +         * Take the String representing the complete forecast in JSON Format and
  +         * pull out the data we need to construct the Strings needed for the wireframes.
@@ -30,51 +36,20 @@ class FetchDefinitionTask extends AsyncTask<String, Void, String[]> {
  +         * Fortunately parsing is easy:  constructor takes the JSON string and converts it
  +         * into an Object hierarchy for us.
  +         */
-            private String[] getWordsrDataFromJson(String textJsonStr, String atribution)
-            throws JSONException
-
-    {
-
-     // These are the names of the JSON objects that need to be extracted.
-                    final String OWM_LIST = "definitions";
-                    final String OWM_TEXT = "text";
-                    final String OWM_ATRIBUTIOND = "atribution";
-
-
-                    JSONObject defsJson = new JSONObject(textJsonStr);
-                    JSONArray defsArray = defsJson.getJSONArray(OWM_LIST);
-
-                    String[] resultStrs = new String[wordD];
-                    for(int i = 0; i < defsArray.length(); i++) {
-
-                       String text;
-                       String atributionDef;
-
-                       // Get the JSON object representing the wordDef
-                       JSONObject wordDef = defsArray.getJSONObject(i);
-
-                        // text is in a child array called "definitions"
-                        JSONObject definitionsTObject = defsArray.getJSONArray(OWM_LIST).getJSONObject(0);
-                        text = definitionsTObject.getString(OWM_TEXT);
-                        atributionDef = definitionsTObject.getString(OWM_ATRIBUTIOND);
-
-                        resultStrs[i] = text + " - " + atributionDef + " - ";
-                    }
-
-                        for (String s : resultStrs) {
-                        Log.v(LOG_TAG, "DEFS entry: " + s);
-                    }
-                    return resultStrs;
-
-                        }
+public FetchDefinitionTask(Context context, ArrayAdapter<String> definitionsAdapter) {
+    mContext = context;
+    definitionsAdapter = definitionsAdapter;
 
     @Override
-    protected String[] doInBackground(String... params) {
+    protected List<String> doInBackground(String[] params){
 
         // If there's no WORD, there's nothing to look up.  Verify size of params.
         if (params.length == 0) {
-        return null;
+            return null;
         }
+        return getWordsDataFromJson(params[0], params[1]);
+    }
+        private List<String> getWordsDataFromJson(String textD, String atributionD) throws JSONException {
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
@@ -82,7 +57,7 @@ class FetchDefinitionTask extends AsyncTask<String, Void, String[]> {
 
         // Will contain the raw JSON response as a string.
         String definitionsJsonStr = null;
-        String wordToDefinition = null;
+        //String wordToDefinition = null;
 
         Log.v(LOG_TAG, "Try is below");
         try {
@@ -125,16 +100,14 @@ class FetchDefinitionTask extends AsyncTask<String, Void, String[]> {
                 return null;
             }
             definitionsJsonStr = buffer.toString();
-
-
+            Log.i(LOG_TAG, "JSON Response:\t" + definitionsJsonStr);
             Log.v(LOG_TAG, "definitions Json Str" + definitionsJsonStr);
 
-            // Log.i(LOG_TAG, definitionsJsonStr);
         } catch (IOException e) {
             Log.e("PlaceholderFragment", "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
             // to parse it.
-            return null;
+
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -148,13 +121,68 @@ class FetchDefinitionTask extends AsyncTask<String, Void, String[]> {
             }
         }
         try {
-                            return getWordsrDataFromJson(textJsonStr,atribution);
+            //return getWordsDataFromJson(definitionsJsonStr);
+            return getWordsDataFromJson(textD,atributionD);
         } catch (JSONException e) {
-                            Log.e(LOG_TAG, e.getMessage(), e);
+            Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
-                        }
+        }
         return null;
     }
 
+   private List<String> getWordsDataFromJson(String definitionsJsonStr)throws JSONException{
+
+        List<String> definitionsInfo = new ArrayList();
+
+            // These are the names of the JSON objects that need to be extracted.
+            final String OWM_LIST = "definitions";
+            final String OWM_TEXT = "text";
+            final String OWM_ATRIBUTIOND = "atribution";
+
+            JSONArray definitionsJsonArray = new JSONArray(definitionsJsonStr);
+
+            //Variables that response Dictionary
+            JSONObject defsJsonObject;
+            String text;
+            String atribution;
+
+            for (int i = 0; i < definitionsJsonArray.length(); i++) {
+
+                defsJsonObject = definitionsJsonArray.getJSONObject(i);
+                text = defsJsonObject.get(OWM_TEXT);
+                atribution = defsJsonObject.getString(OWM_ATRIBUTIOND);
+
+                definitionsInfo.add(text);
+            }
+            return definitionsInfo;
+        }
+
+    @Override
+        protected void onPostExecute(List<String> result){
+                if (result != null && definitionsAdapter != null) {
+                    definitionsAdapter.clear();
+                       for(String rsuContainerStr : result) {
+                           definitionsAdapter.add(rsuContainerStr);
+                           Log.v(LOG_TAG, "DEFS entry: " + s);
+                           }
+                    }
+    }
+}
+
+
+//        //JSONArray defsArray = defsJson.getJSONArray(OWM_LIST);
+//        // Get the JSON object representing the wordDef
+//        JSONObject wordDef = defsArray.getJSONObject(i);
+//
+//        // text is in a child array called "definitions"
+//        JSONObject definitionsTObject = defsArray.getJSONArray(OWM_LIST).getJSONObject(0);
+//        text = definitionsTObject.getString(OWM_TEXT);
+//        atributionDef = definitionsTObject.getString(OWM_ATRIBUTIOND);
+//
+//        resultStrs[i] = text + " - " + atributionDef + " - ";
+//    }
+
 
 }
+
+
