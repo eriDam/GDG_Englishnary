@@ -36,9 +36,11 @@ class FetchDefinitionTask extends AsyncTask<String, Void, List<String>> {
  +         * Fortunately parsing is easy:  constructor takes the JSON string and converts it
  +         * into an Object hierarchy for us.
  +         */
+
+}
 public FetchDefinitionTask(Context context, ArrayAdapter<String> definitionsAdapter) {
-    mContext = context;
-    definitionsAdapter = definitionsAdapter;
+    this.mContext = context;
+    this.definitionsAdapter = definitionsAdapter;
 
     @Override
     protected List<String> doInBackground(String[] params){
@@ -122,7 +124,7 @@ public FetchDefinitionTask(Context context, ArrayAdapter<String> definitionsAdap
         }
         try {
             //return getWordsDataFromJson(definitionsJsonStr);
-            return getWordsDataFromJson(textD,atributionD);
+            return getWordsDataFromJson(textD, atributionD);
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
@@ -130,32 +132,32 @@ public FetchDefinitionTask(Context context, ArrayAdapter<String> definitionsAdap
         return null;
     }
 
-   private List<String> getWordsDataFromJson(String definitionsJsonStr)throws JSONException{
-
-        List<String> definitionsInfo = new ArrayList();
-
-            // These are the names of the JSON objects that need to be extracted.
-            final String OWM_LIST = "definitions";
-            final String OWM_TEXT = "text";
-            final String OWM_ATRIBUTIOND = "atribution";
-
-            JSONArray definitionsJsonArray = new JSONArray(definitionsJsonStr);
-
-            //Variables that response Dictionary
-            JSONObject defsJsonObject;
-            String text;
-            String atribution;
-
-            for (int i = 0; i < definitionsJsonArray.length(); i++) {
-
-                defsJsonObject = definitionsJsonArray.getJSONObject(i);
-                text = defsJsonObject.get(OWM_TEXT);
-                atribution = defsJsonObject.getString(OWM_ATRIBUTIOND);
-
-                definitionsInfo.add(text);
-            }
-            return definitionsInfo;
-        }
+//   private List<String> getWordsDataFromJson(String definitionsJsonStr)throws JSONException{
+//
+//        List<String> definitionsInfo = new ArrayList();
+//
+//            // These are the names of the JSON objects that need to be extracted.
+//            final String OWM_LIST = "definitions";
+//            final String OWM_TEXT = "text";
+//            final String OWM_ATRIBUTIOND = "atribution";
+//
+//            JSONArray definitionsJsonArray = new JSONArray(definitionsJsonStr);
+//
+//            //Variables that response Dictionary
+//            JSONObject defsJsonObject;
+//            String text;
+//            String atribution;
+//
+//            for (int i = 0; i < definitionsJsonArray.length(); i++) {
+//
+//                defsJsonObject = definitionsJsonArray.getJSONObject(i);
+//                text = defsJsonObject.get(OWM_TEXT);
+//                atribution = defsJsonObject.getString(OWM_ATRIBUTIOND);
+//
+//                definitionsInfo.add(text);
+//            }
+//            return definitionsInfo;
+//        }
 
     @Override
         protected void onPostExecute(List<String> result){
@@ -168,6 +170,7 @@ public FetchDefinitionTask(Context context, ArrayAdapter<String> definitionsAdap
                     }
     }
 }
+
 
 
 //        //JSONArray defsArray = defsJson.getJSONArray(OWM_LIST);
